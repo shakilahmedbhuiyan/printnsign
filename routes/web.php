@@ -18,6 +18,13 @@ Route::group([
         return view('dashboard');
     })->name('dashboard');
 
+    Route::middleware(['permission:role-list'])
+    ->get('/roles', \App\Livewire\Dash\Admin\Roles\Index::class)->name('roles.index');
+    Route::middleware(['permission:role-create'])
+    ->get('/roles/create', \App\Livewire\Dash\Admin\Roles\Create::class)->name('roles.create');
+    Route::middleware(['permission:role-edit'])
+    ->get('/roles/{role}/update', \App\Livewire\Dash\Admin\Roles\update::class)->name('roles.update');
+
 });
 
 // /**

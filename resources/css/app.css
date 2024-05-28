@@ -1,7 +1,34 @@
 @tailwind base;
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #1667ba lightgray;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+    background: lightgray;
+    border-radius: 6px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border-radius: 5px;
+    border: 5px solid #1667ba;
+}
+
 @tailwind components;
 @tailwind utilities;
+@tailwind screens;
 
 [x-cloak] {
-    display: none;
+    display: none !important;
+}
+.hoverTable .hoverTableBody tr {
+    @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600;
 }
