@@ -24,8 +24,9 @@
 <body id="app" class="font-sans antialiased  bg-gray-100 dark:bg-gray-900">
     <x-banner />
 
-    <div class="flex flex-row relative" x-data="{ sidebar: false, mobile: false }" x-init="width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-    sidebar = (width < 640) ? false : true;"
+    <div class="flex flex-row relative" x-data="{ sidebar: false, mobile: false }"
+         x-init="width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+                 sidebar = (width < 640) ? false : true;"
         @resize.window="width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
                        sidebar = (width < 640) ? false : true">
 
@@ -36,7 +37,7 @@
             class="min-h-screen p-4 w-full mt-14 transition-all duration-300 ease-in-out">
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white dark:bg-gray-800 drop-shadow">
+                <header class="bg-white dark:bg-slate-800 drop-shadow backdrop-blur-lg rounded-md">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
                         <h2 class="text-xl font-bold text-blue-800 dark:text-blue-200 tracking-widest">
                             {{ $header }}

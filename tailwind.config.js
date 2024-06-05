@@ -17,6 +17,9 @@ export default {
         './vendor/wireui/wireui/ts/**/*.ts',
         './vendor/wireui/wireui/src/WireUi/**/*.php',
         './vendor/wireui/wireui/src/Components/**/*.php',
+         './app/Filament/**/*.php',
+        './resources/views/filament/**/*.blade.php',
+        './vendor/filament/**/*.blade.php',
     ],
 
     theme: {

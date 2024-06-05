@@ -1,11 +1,11 @@
 <section>
     <x-slot name="header">
-        {{_($header)}}
+        {{__($header)}}
     </x-slot>
     <x-slot name="button">
         @can('role-create')
             <a href="{{ route('admin.roles.create') }}" wire:navigate>
-                <x-button type="button">
+                <x-button-1 type="button" class="drop-shadow">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor" class="w-5 h-5 mr-2">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -13,14 +13,14 @@
                     </svg>
 
                     {!! "Create Role" !!}
-                </x-button>
+                </x-button-1>
             </a>
         @endcan
 
     </x-slot>
 
-     <!-- Roles Table -->
-     <div class="relative overflow-x-auto sm:rounded-lg my-5">
+    <!-- Roles Table -->
+    <div class="relative overflow-x-auto sm:rounded-lg my-5">
         <x-table-hover>
             <x-slot name="thead">
                 <th scope="col" class="px-6 py-3">No</th>
@@ -34,15 +34,22 @@
                         <td class="px-6 py-4">{{ $role->name }}</td>
                         <td class="px-6 py-4 space-x-2">
                             <a class="btn btn-info" href="">
-                                <x-button/>
+                                <x-btn-view>
+                                    {{ __('View') }}
+                                </x-btn-view>
                             </a>
                             @can('role-edit')
                                 <a class="btn btn-primary" href="{{ route('admin.roles.update', $role->id) }}">
-                                    <x-button/>
+                                    <x-btn-edit>
+
+                                        {{ __('Edit') }}
+                                    </x-btn-edit>
                                 </a>
                             @endcan
                             @can('role-delete')
-                                <x-button/>
+                                <x-btn-delete>
+                                    {{ __('Delete') }}
+                                </x-btn-delete>
                             @endcan
                         </td>
                     </tr>
