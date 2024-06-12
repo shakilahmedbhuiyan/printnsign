@@ -39,7 +39,7 @@
                                 </x-btn-view>
                             </a>
                             @can('role-edit')
-                                <a class="btn btn-primary" href="{{ route('admin.roles.update', $role->id) }}">
+                                <a class="btn btn-primary" href="{{ route('admin.roles.update', $role->id) }}" wire:navigate>
                                     <x-btn-edit>
 
                                         {{ __('Edit') }}

@@ -16,13 +16,13 @@ class Index extends Component
     public function mount()
     {
 
-        $this->roles= collect(Role::all());
+        $this->roles= Role::with('permissions')->get();
     }
 
 
     public function save()
     {
-      
+
         // use a simple syntax: success | error | warning | info
         $this->notification()->success(
             $title = 'Profile saved',
@@ -32,7 +32,7 @@ class Index extends Component
             $title = 'Error !!!',
             $description = 'Your profile was not saved'
         );
- 
+
         // or use a full syntax
         $this->notification([
             'title'       => 'Profile saved!',
@@ -48,7 +48,6 @@ class Index extends Component
 
     public function render()
     {
-    
 
         return view('livewire.dash.admin.roles.index', ['header' => 'Roles'])
             ->layout('layouts.app', ['title' => 'Roles']);
