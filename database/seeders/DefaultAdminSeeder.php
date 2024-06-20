@@ -24,7 +24,7 @@ class DefaultAdminSeeder extends Seeder
             'password' => bcrypt('Retrieval#It@2021')
         ]);
 
-        $role = Role::create(['name' => 'Super Admin']);
+        $role = Role::create(['name' => 'super-admin']);
 
         $permissions = Permission::pluck('id','id')->all();
 

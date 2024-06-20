@@ -20,30 +20,18 @@ class Index extends Component
     }
 
 
-    public function save()
+    public function delete(Role $role)
     {
+        $this->authorize('delete', $role);
+        // $role->permissions()->detach();
+        // $role->delete();
+        $this->dispatch('$refresh');
 
-        // use a simple syntax: success | error | warning | info
         $this->notification()->success(
-            $title = 'Profile saved',
-            $description = 'Your profile was successfully saved'
+            $title = 'Role ' . $role->name . ' Deleted',
+            $description = 'Role deleted successfully'
         );
-        $this->notification()->error(
-            $title = 'Error !!!',
-            $description = 'Your profile was not saved'
-        );
-
-        // or use a full syntax
-        $this->notification([
-            'title'       => 'Profile saved!',
-            'description' => 'Your profile was successfully saved',
-            'icon'        => 'success'
-        ]);
-        $this->notification()->send([
-            'title'       => 'Profile saved!',
-            'description' => 'Your profile was successfully saved',
-            'icon'        => 'success'
-        ]);
+        
     }
 
     public function render()

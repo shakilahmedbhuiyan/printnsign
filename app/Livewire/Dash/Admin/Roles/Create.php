@@ -15,26 +15,29 @@ class Create extends Component
     public $permissions = [];
 
 
+
     /**
      * Store a newly created resource in storage.
      *
      */
     public function store()
     {
+        $this->authorize('create', Role::class);
+
         $validated = $this->validate([
             'name' => 'required|unique:roles,name',
             'permissions' => 'required',
         ]);
 
         $this->permissions = array_map(function ($item) {
-          return (int)$item;
+            return (int)$item;
         }, $this->permissions);
         // dd($this->permissions);
 
         $role = Role::create(['guard_name' => 'web', 'name' => $validated['name']]);
         $role->syncPermissions($this->permissions);
         $this->notification()->success(
-            $title = 'Role '.$role->name .' Created',
+            $title = 'Role ' . $role->name . ' Created',
             $description = 'Role created successfully'
         );
         sleep(0.7);
@@ -46,10 +49,10 @@ class Create extends Component
     {
         $permission = Permission::all();
 
-        return view('livewire.dash.admin.roles.create',
+        return view(
+            'livewire.dash.admin.roles.create',
             ['header' => 'Create Role'],
             compact('permission')
-        )
-            ->layout('layouts.app', ['title' => 'Create Role']);
+        )->layout('layouts.app', ['title' => 'Create Role']);
     }
 }

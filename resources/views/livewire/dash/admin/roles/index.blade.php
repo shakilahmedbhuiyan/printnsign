@@ -20,7 +20,8 @@
     </x-slot>
 
     <!-- Roles Table -->
-    <div class="relative overflow-x-auto sm:rounded-lg my-5">
+    <div class="relative overflow-x-auto sm:rounded-lg my-5" 
+    wire:loading.class="opacity-50">
         <x-table-hover>
             <x-slot name="thead">
                 <th scope="col" class="px-6 py-3">No</th>
@@ -33,21 +34,26 @@
                         <td class="px-6 py-4">{{ $role->id }}</td>
                         <td class="px-6 py-4">{{ $role->name }}</td>
                         <td class="px-6 py-4 space-x-2">
-                            <a class="btn btn-info" href="">
-                                <x-btn-view>
+                            <a class="btn btn-info" href=""  >
+                                <x-btn-view wire:loading.attr="disabled">
                                     {{ __('View') }}
                                 </x-btn-view>
                             </a>
                             @can('role-edit')
-                                <a class="btn btn-primary" href="{{ route('admin.roles.update', $role->id) }}" wire:navigate>
-                                    <x-btn-edit>
-
+                                <a class="btn btn-primary" href="{{ route('admin.roles.update', $role->id) }}" 
+                                    wire:navigate>
+                                    <x-btn-edit 
+                                    wire:loading.attr="disabled">
                                         {{ __('Edit') }}
                                     </x-btn-edit>
                                 </a>
                             @endcan
                             @can('role-delete')
-                                <x-btn-delete>
+                                <x-btn-delete 
+                                type="button"
+                                wire:click="delete({{$role->id}})"
+                                wire:confirm="Are you sure you want to delete this post?"
+                                wire:loading.attr="disabled">
                                     {{ __('Delete') }}
                                 </x-btn-delete>
                             @endcan
