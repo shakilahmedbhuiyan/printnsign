@@ -18,8 +18,8 @@
     <div class="my-3">
         <x-validation-errors></x-validation-errors>
     
-        <form>
-            <div class="flex flex-col justify-center space-x-2">
+        <form wire:loading.class="opacity-50 block blur-sm">
+            <div class="flex flex-col justify-center space-x-2 ">
                 <div class="mb-2 inline-flex justify-center">
                     <x-input type="text" id="name" name="name" wire:model="name" class="w-2/3"
                              value="{{ $role['name'] }}" placeholder="Role Name" required></x-input>
@@ -33,7 +33,9 @@
     
                         @foreach($permissions as $p)
                             <x-label>
-                                <x-checkbox wire:model="selectedPermissions" name="selectedPermissions"
+                                <x-checkbox wire:model="selectedPermissions" 
+                                name="selectedPermissions"
+                                wire:loading.attr="disabled"
                                        id="{{ $p->id }}"
                                        value="{{ $p->id }}"/>
                                 {{ $p->name }}
@@ -45,7 +47,7 @@
                 </div>
     
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                    <x-button-1 type="submit" wire:click.prevent="update">
+                    <x-button-1 type="submit" wire:click.prevent="update"  wire:loading.attr="disabled">
                         {!! "Update Role" !!}
                     </x-button-1>
                 </div>

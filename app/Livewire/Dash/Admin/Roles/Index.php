@@ -3,41 +3,120 @@
 namespace App\Livewire\Dash\Admin\Roles;
 
 use Livewire\Component;
-use Spatie\Permission\Models\Role;
+use Filament\Tables\Table;
 use WireUi\Traits\Actions;
+use Spatie\Permission\Models\Role;
+use Illuminate\Contracts\View\View;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+use Spatie\Permission\Models\Permission;
+use Filament\Tables\Actions\CreateAction;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Summarizers\Range;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Tables\Concerns\InteractsWithTable;
 
-class Index extends Component
+class Index extends Component implements HasForms, HasTable
 {
     use Actions;
+    use InteractsWithTable;
+    use InteractsWithForms;
 
     public $roles;
+
+    protected $listeners =
+    [
+        'refresh' => '$refresh',
+    ];
+    public $up = false;
 
 
     public function mount()
     {
-
-        $this->roles= Role::with('permissions')->get();
+        $this->roles = Role::get();
     }
 
 
     public function delete(Role $role)
     {
         $this->authorize('delete', $role);
-        // $role->permissions()->detach();
-        // $role->delete();
-        $this->dispatch('$refresh');
-
+        $role->permissions()->detach();
+        $role->delete();
+        $this->dispatch('refresh');
         $this->notification()->success(
             $title = 'Role ' . $role->name . ' Deleted',
             $description = 'Role deleted successfully'
         );
-        
     }
+
+    public function table(Table $table): Table
+    {
+
+        return $table
+            ->query(Permission::query())
+            ->columns([
+
+                Split::make([
+                    TextColumn::make('name')
+                        ->searchable()
+                        ->sortable(),
+
+                    TextColumn::make('created_at')
+                        ->dateTime('d M, Y h:i:sa'),
+
+                    TextColumn::make('updated_at')
+                        ->label('Last Update')
+                        ->dateTime('d M, Y h:i:sa')
+                ]),
+            ])
+            ->headerActions([
+                CreateAction::make()
+                    ->label('Add Permission')
+                    ->form([
+                        TextInput::make('name')
+                            ->required()
+                            ->maxLength(255)
+                            ->placeholder('Permission Name')
+                    ])
+                    ->extraAttributes([ 'class' => 'text-blue-500'])
+            ])
+            ->actions([
+                EditAction::make()
+                    ->authorize('update', Permission::class)
+                    ->form(function (Permission $record) {
+                        return [
+                            TextInput::make('name')
+                                ->default($record->name)
+                                ->required()
+                                ->maxLength(255)
+                                ->placeholder('Permission Name')
+                        ];
+                    })
+                    ->extraAttributes(['class' => 'text-amber-500'])
+            ]);
+    }
+
+
+
 
     public function render()
     {
 
-        return view('livewire.dash.admin.roles.index', ['header' => 'Roles'])
+        if (session()->has('success')) {
+            Notification::make()
+                ->title('Saved successfully')
+                ->success()
+                ->body(session('success'))
+                ->color('success')
+                ->iconColor('success')
+                ->send();
+            session()->forget('success');
+        }
+        return view('livewire.dash.admin.roles.index', ['header' => 'Roles and Permissions'])
             ->layout('layouts.app', ['title' => 'Roles']);
     }
 }

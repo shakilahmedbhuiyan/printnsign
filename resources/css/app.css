@@ -32,3 +32,7 @@
 .hoverTable .hoverTableBody tr {
     @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-blue-50 dark:hover:bg-gray-600;
 }
+
+.fi-ta-record div:hover{
+    @apply bg-blue-100 dark:bg-gray-700;
+}

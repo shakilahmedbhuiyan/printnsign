@@ -9,7 +9,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 
 class RolePolicy
 {
-    use HandlesAuthorization;
+    use HandlesAuthorization; 
 
 
     public function create(User $user): Response
@@ -24,7 +24,7 @@ class RolePolicy
     {
         if ($user->hasRole('super-admin')) {
             return Response::allow();
-        } else if ($user->can('role-edit') && !$user->hasRole($role->name)) {
+        } else if ($user->can('role-edit') && !$user->hasRole($role->name) && $role->name !== 'super-admin') {
             return Response::allow();
         } else {
             return Response::deny('You can not update the role.');
@@ -33,9 +33,10 @@ class RolePolicy
 
     public function delete(User $user, Role $role)
     {
-        if ($user->hasRole('super-admin')) {
+
+        if ($user->hasRole('super-admin') && $role->name !== 'super-admin') {
             return Response::allow();
-        } else if ($user->can('role-delete') && !$user->hasRole($role->name)) {
+        } else if ($user->can('role-delete') && !$user->hasRole($role->name) && $role->name !== 'super-admin') {
             return Response::allow();
         } else {
             return Response::deny('You can not delete the role.');

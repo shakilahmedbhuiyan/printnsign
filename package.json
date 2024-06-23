@@ -16,6 +16,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
-        "@ryangjchandler/alpine-clipboard": "github:ryangjchandler/alpine-clipboard"
+        "@ryangjchandler/alpine-clipboard": "github:ryangjchandler/alpine-clipboard",
+        "postcss-nesting": "^12.1.5"
     }
 }

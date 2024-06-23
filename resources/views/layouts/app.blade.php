@@ -15,9 +15,10 @@
 
     <!-- Scripts -->
     <wireui:scripts />
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Styles -->
+    @filamentStyles
+    @vite('resources/css/app.css')
     @livewireStyles
 </head>
 
@@ -57,9 +58,12 @@
             </main>
         </div>
 
+        @livewire('notifications')
         @stack('modals')
     </div>
 
+    @filamentScripts
+    @vite('resources/js/app.js')
     @livewireScripts
 </body>
 

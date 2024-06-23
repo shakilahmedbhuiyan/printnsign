@@ -25,12 +25,11 @@ class Update extends Component
         $this->rolePermissions = $role->permissions->pluck('id')->toArray();
         $r = implode(',', $this->rolePermissions);
         $this->selectedPermissions = explode(",", $r);
-
     }
 
     public function render()
     {
-       
+
         return view('livewire.dash.admin.roles.update', ['header' => 'Update Role'])
             ->layout('layouts.app', ['title' => 'Update Role']);;
     }
@@ -38,26 +37,25 @@ class Update extends Component
 
     public function update()
     {
-        $this->authorize('update', $this->role);
+        if(!$this->authorize('update', $this->role))
+        
 
-        $validated = $this->validate([
+        $this->validate([
             'name' => 'required|unique:roles,name,' . $this->role->id,
             'selectedPermissions' => 'required',
         ]);
+        
 
         $this->selectedPermissions = array_map(function ($item) {
             return (int)$item;
         }, $this->selectedPermissions);
+        
 
-        $this->role->update(['name' => $validated['name']]);
+        $this->role->update(['name' => $this->name]);
         $this->role->syncPermissions($this->selectedPermissions);
 
-        $this->notification()->success(
-            $title = 'Role ' . $this->role->name . ' Updated',
-            $description = 'Role updated successfully'
-        );
-        sleep(0.7);
+        session()->flash('success', 'Role ' . $this->role->name . ' Updated');
 
-        return $this->redirect(route('admin.roles.index'), navigate: true);
+       return $this->redirect(route('admin.roles.index'), navigate: true);
     }
 }
