@@ -16,6 +16,7 @@ use Filament\Notifications\Notification;
 use Spatie\Permission\Models\Permission;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Columns\Layout\Split;
+use Illuminate\Support\Facades\Validator;
 use Filament\Tables\Columns\Summarizers\Range;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -75,14 +76,20 @@ class Index extends Component implements HasForms, HasTable
             ])
             ->headerActions([
                 CreateAction::make()
+                    
                     ->label('Add Permission')
                     ->form([
                         TextInput::make('name')
                             ->required()
-                            ->maxLength(255)
+                            ->maxLength(20)
                             ->placeholder('Permission Name')
+                            ->rules([
+                                'required',
+                                'max:20',
+                                'unique:permissions,name'
+                            ])
                     ])
-                    ->extraAttributes([ 'class' => 'text-blue-500'])
+                    ->extraAttributes(['class' => 'text-blue-500'])
             ])
             ->actions([
                 EditAction::make()
@@ -94,9 +101,15 @@ class Index extends Component implements HasForms, HasTable
                                 ->required()
                                 ->maxLength(255)
                                 ->placeholder('Permission Name')
+                                ->rules([
+                                    'required',
+                                    'max:20',
+                                    'unique:permissions,name, ' . $record->id
+                                ])
                         ];
                     })
                     ->extraAttributes(['class' => 'text-amber-500'])
+                   
             ]);
     }
 

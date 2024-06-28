@@ -10,6 +10,18 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class PermissionPolicy
 {
     use HandlesAuthorization; 
+
+    public function create( User $user)
+    {
+        if ($user->hasRole('super-admin')) {
+            return Response::allow();
+        } else if ($user->can('permission-create')) {
+            return Response::allow();
+        } else {
+            return Response::deny('You can not create the permission.');
+        }
+    }
+    
     public function update(User $user, Permission $permission)
     {
 
