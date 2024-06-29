@@ -114,8 +114,6 @@ class Index extends Component implements HasForms, HasTable
     }
 
 
-
-
     public function render()
     {
 
