@@ -58,13 +58,14 @@
                             <x-dropdown.item separator icon="user" label="My Profile"
                                 href="{{ route('profile.show') }}"  wire:navigate/>
 
-                            <x-dropdown.item icon="view-grid" label="Dashboard" href="{{ route('admin.dashboard') }}" wire:navigate />
+                            <x-dropdown.item icon="rectangle-group"  label="Dashboard" href="{{ route('admin.dashboard') }}" wire:navigate />
 
 
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <x-dropdown.item icon="logout" label="Logout" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); this.closest('form').submit();" />
+                                <x-dropdown.item icon="lock-closed" label="Logout" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); this.closest('form').submit();" >
+                                </x-dropdown.item>
                             </form>
 
                         </x-dropdown>

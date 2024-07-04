@@ -9,7 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable
 {
@@ -51,6 +53,17 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * get all the user except customer role
+     */
+   public function scopeWithRoles(Builder $query)
+    {
+        return $query->whereHas('roles')->with('roles')->whereDoesntHave('roles', function ($query) {
+            $query->where('name', 'customer');
+        });
+    }
+
 
     /**
      * Get the attributes that should be cast.

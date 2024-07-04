@@ -4,9 +4,7 @@ namespace App\Livewire\Dash\Admin\Roles;
 
 use Livewire\Component;
 use Filament\Tables\Table;
-use WireUi\Traits\Actions;
 use Spatie\Permission\Models\Role;
-use Illuminate\Contracts\View\View;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
@@ -16,23 +14,22 @@ use Filament\Notifications\Notification;
 use Spatie\Permission\Models\Permission;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Columns\Layout\Split;
-use Illuminate\Support\Facades\Validator;
-use Filament\Tables\Columns\Summarizers\Range;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
+use WireUi\Traits\WireUiActions;
 
 class Index extends Component implements HasForms, HasTable
 {
-    use Actions;
+    use WireUiActions;
     use InteractsWithTable;
     use InteractsWithForms;
 
     public $roles;
 
     protected $listeners =
-    [
-        'refresh' => '$refresh',
-    ];
+        [
+            'refresh' => '$refresh',
+        ];
     public $up = false;
 
 
@@ -76,7 +73,6 @@ class Index extends Component implements HasForms, HasTable
             ])
             ->headerActions([
                 CreateAction::make()
-                    
                     ->label('Add Permission')
                     ->form([
                         TextInput::make('name')
@@ -109,7 +105,7 @@ class Index extends Component implements HasForms, HasTable
                         ];
                     })
                     ->extraAttributes(['class' => 'text-amber-500'])
-                   
+
             ]);
     }
 

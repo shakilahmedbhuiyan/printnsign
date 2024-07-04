@@ -37,14 +37,14 @@
         <div :class="{ 'ml-64': sidebar, 'ml-0': !sidebar }"
             class="min-h-screen p-4 w-full mt-14 transition-all duration-300 ease-in-out">
             <!-- Page Heading -->
-            @if (isset($header))
+            @if (isset($header) || isset($title))
                 <header class="bg-white dark:bg-slate-800 drop-shadow backdrop-blur-lg rounded-md">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center">
                         <h2 class="text-xl font-bold text-blue-800 dark:text-blue-200 tracking-widest">
-                            {{ $header }}
+                            {{ $header?? $title }}
                         </h2>
                         @isset($button)
-                            <div>
+                            <div class="w-full sm:w-1/2 flex flex-col sm:flex-row justify-end">
                                 {{ $button }}
                             </div>
                         @endisset
@@ -65,6 +65,7 @@
     @filamentScripts
     @vite('resources/js/app.js')
     @livewireScripts
+    @stack('scripts')
 </body>
 
 </html>

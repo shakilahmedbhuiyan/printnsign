@@ -3,13 +3,13 @@
 namespace App\Livewire\Dash\Admin\Roles;
 
 use Livewire\Component;
-use WireUi\Traits\Actions;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use WireUi\Traits\WireUiActions;
 
 class Update extends Component
 {
-    use Actions;
+    use WireUiActions;
 
     public Role $role;
     public $permissions;
@@ -31,25 +31,25 @@ class Update extends Component
     {
 
         return view('livewire.dash.admin.roles.update', ['header' => 'Update Role'])
-            ->layout('layouts.app', ['title' => 'Update Role']);;
+            ->layout('layouts.app', ['title' => 'Update Role']);
     }
 
 
-    public function update()
+    public function update(): null
     {
-        if(!$this->authorize('update', $this->role))
-        
+        $this->authorize('update', $this->role);
+
 
         $this->validate([
             'name' => 'required|unique:roles,name,' . $this->role->id,
             'selectedPermissions' => 'required',
         ]);
-        
+
 
         $this->selectedPermissions = array_map(function ($item) {
             return (int)$item;
         }, $this->selectedPermissions);
-        
+
 
         $this->role->update(['name' => $this->name]);
         $this->role->syncPermissions($this->selectedPermissions);

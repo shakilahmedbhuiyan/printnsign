@@ -1,5 +1,8 @@
 @php
-    $hasError = !$errorless && $name && $errors->has($name);
+global $attributes, $name;
+$errorless =  $attributes->get('errorless', false);
+$errors = $attributes->get('errors', app('view')->shared('errors'));
+$hasError = !$errorless && $name && $errors->has($name);
 @endphp
 
 <div class="@if($disabled) opacity-60 @endif">
@@ -50,7 +53,7 @@
             ])->merge([
                 'type'         => 'text',
                 'autocomplete' => 'off',
-            ]) }} />
+            ]) }}/>
 
         @if ($suffix || $rightIcon || ($hasError && !$append) || $spinner)
             <div class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none

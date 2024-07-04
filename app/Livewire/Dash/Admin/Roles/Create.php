@@ -5,22 +5,22 @@ namespace App\Livewire\Dash\Admin\Roles;
 use Livewire\Component;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use WireUi\Traits\Actions;
+use WireUi\Traits\WireUiActions;
 
 class Create extends Component
 {
-    use Actions;
+
+    use WireUiActions;
 
     public $name;
     public $permissions = [];
-
 
 
     /**
      * Store a newly created resource in storage.
      *
      */
-    public function store()
+    public function store(): null
     {
         $this->authorize('create', Role::class);
 
@@ -32,7 +32,6 @@ class Create extends Component
         $this->permissions = array_map(function ($item) {
             return (int)$item;
         }, $this->permissions);
-        // dd($this->permissions);
 
         $role = Role::create(['guard_name' => 'web', 'name' => $validated['name']]);
         $role->syncPermissions($this->permissions);

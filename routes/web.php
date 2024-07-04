@@ -25,6 +25,9 @@ Route::group([
     Route::middleware(['permission:role-edit' ])
     ->get('/roles/{role}/update', \App\Livewire\Dash\Admin\Roles\Update::class)->name('roles.update');
 
+    Route::middleware(['permission:user-list'])
+    ->get('/users', \App\Livewire\Dash\Admin\Users\Index::class)->name('users.index');
+
 });
 
 // /**
