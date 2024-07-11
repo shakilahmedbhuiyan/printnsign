@@ -62,6 +62,10 @@ class Index extends Component implements HasForms, HasTable
                     TextColumn::make('name')
                         ->searchable()
                         ->sortable(),
+                    TextColumn::make('guard_name')
+                        ->label('Guard')
+                        ->searchable()
+                        ->sortable(),
 
                     TextColumn::make('created_at')
                         ->dateTime('d M, Y h:i:sa'),
@@ -101,6 +105,15 @@ class Index extends Component implements HasForms, HasTable
                                     'required',
                                     'max:20',
                                     'unique:permissions,name, ' . $record->id
+                                ]),
+                            TextInput::make('guard_name')
+                                ->default($record->guard_name)
+                                ->required()
+                                ->maxLength(255)
+                                ->placeholder('Guard Name')
+                                ->rules([
+                                    'required',
+                                    'max:20',
                                 ])
                         ];
                     })

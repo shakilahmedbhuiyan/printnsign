@@ -26,6 +26,7 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                serif: ['Alexandra', ...defaultTheme.fontFamily.sans],
             },
         },
     },

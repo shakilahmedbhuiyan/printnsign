@@ -26,6 +26,7 @@
 @tailwind utilities;
 @tailwind screens;
 
+
 [x-cloak] {
     display: none !important;
 }
@@ -56,3 +57,46 @@
         left: 150%
     }
 }
+
+/* #Mega Menu Styles
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+.mega-menu {
+    display: none;
+    left: 0;
+    position: absolute;
+    text-align: left;
+    width: 100%;
+}
+
+
+/* #hoverable Class Styles
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.hoverable {
+    position: static;
+}
+
+.hoverable > a:after {
+    content: "\25BC";
+    font-size: 13px;
+    padding-left: 3px;
+    position: relative;
+    top: 0;
+}
+
+.hoverable:hover .mega-menu {
+    display: block;
+}
+
+@media (max-width: 639px) {
+    #searchModal .items-end {
+        align-items: flex-start;
+    }
+}
+
+@media (min-width: 640px) {
+    #searchModal .items-end {
+        align-items: center;
+    }
+}
+
+

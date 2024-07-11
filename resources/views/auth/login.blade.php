@@ -1,3 +1,9 @@
+@php
+   \Artesaos\SEOTools\Facades\SEOTools::setTitle('Login');
+    \Artesaos\SEOTools\Facades\SEOTools::setDescription('Login to your account');
+    \Artesaos\SEOTools\Facades\SEOTools::opengraph()->setUrl(url()->current());
+@endphp
+
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
@@ -21,7 +27,7 @@
             </div>
 
             <div class="mt-4">
-                <x-inputs.password label="Password" id="password" class="block mt-1 w-full" type="password"
+                <x-password label="Password" id="password" class="block mt-1 w-full" type="password"
                     name="password" required autocomplete="current-password" />
             </div>
 

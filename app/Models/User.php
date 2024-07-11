@@ -57,11 +57,12 @@ class User extends Authenticatable
     /**
      * get all the user except customer role
      */
-   public function scopeWithRoles(Builder $query)
+    public function scopeWithRoles(Builder $query)
     {
-        return $query->whereHas('roles')->with('roles')->whereDoesntHave('roles', function ($query) {
-            $query->where('name', 'customer');
-        });
+        return $query->whereHas('roles')->with('roles')
+            ->whereDoesntHave('roles', function ($query) {
+                $query->where('name', 'customer');
+            });
     }
 
 

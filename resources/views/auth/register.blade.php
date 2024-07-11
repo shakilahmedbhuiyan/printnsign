@@ -20,7 +20,7 @@
             </div>
 
             <div class="mt-4">
-                <x-inputs.password id="password" type="password" name="password" label="Password"
+                <x-password id="password" type="password" name="password" label="Password"
                     right-icon="lock-closed" required autocomplete="new-password" placeholder="Password" />
             </div>
 
